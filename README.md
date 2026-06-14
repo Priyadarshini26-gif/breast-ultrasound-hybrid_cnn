@@ -1,5 +1,12 @@
 # Breast Ultrasound CNN: Interpretable Deep Learning with Attention
 
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0-red)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-CNN-purple)
+![Medical AI](https://img.shields.io/badge/Medical-AI-green)
+![XAI](https://img.shields.io/badge/XAI-Explainable%20AI-yellow)
+
+
 Hybrid CNN-Transformer model with attention visualization for interpretable breast ultrasound image classification.
 
 ## Overview
@@ -30,6 +37,83 @@ Output (Benign/Malignant/Normal)
 - **Backbone:** ResNet18 (pretrained on ImageNet)
 - **Attention:** Spatial & Channel attention layers
 - **Interpretability:** Score-CAM visualization of model decisions
+
+## Features
+
+### 1. Three-Class Classification
+- Distinguishes between Benign, Malignant, and Normal findings
+- Critical for clinical decision support
+
+### 2. Attention Mechanism
+- Spatial attention identifies important image regions
+- Channel attention learns feature importance
+- Improves model transparency
+
+### 3. Interpretability with Score-CAM
+- Visualizes which regions influence model decisions
+- Generates attention maps showing model focus areas
+- Helps clinicians understand predictions
+- Sample outputs saved for benign, malignant, and normal classes
+
+## Requirements
+
+- torch
+- torchvision
+- scikit-learn
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- opencv-python
+
+
+## Installation
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/breast-ultrasound-hybrid_cnn.git
+cd breast-ultrasound-hybrid_cnn
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+## Usage
+
+### 1. Open the Notebook
+
+```bash
+jupyter notebook breast_ultrasound_analysis.ipynb
+```
+
+### 2. Workflow
+
+1. **Data Loading & Preprocessing**
+   - Load BUSI dataset
+   - Create balanced dataset
+   - Apply image preprocessing and augmentation
+
+2. **Model Definition**
+   - Define HybridCNNTransformer architecture
+   - Load pretrained ResNet18 backbone
+   - Initialize attention layers
+
+3. **Training**
+   - Train model on balanced dataset
+   - Monitor training/validation loss and accuracy
+   - Early stopping and model checkpointing
+
+4. **Evaluation**
+   - Compute classification metrics (accuracy, precision, recall, F1)
+   - Generate confusion matrix
+   - Plot ROC curves for each class
+
+5. **Interpretability Analysis**
+   - Generate Score-CAM attention maps
+   - Visualize model focus regions for each sample
+   - Save attention visualizations for benign, malignant, and normal samples
+
 
 ## Performance Metrics
 
@@ -77,89 +161,6 @@ Overall Accuracy: 96%
 
 *See `results/` folder for all generated plots and visualizations*
 
-## Installation
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/breast-ultrasound-cnn.git
-cd breast-ultrasound-cnn
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-```
-
-## Usage
-
-### 1. Open the Notebook
-
-```bash
-jupyter notebook breast_ultrasound_analysis.ipynb
-```
-
-### 2. Workflow
-
-1. **Data Loading & Preprocessing**
-   - Load BUSI dataset
-   - Create balanced dataset
-   - Apply image preprocessing and augmentation
-
-2. **Model Definition**
-   - Define HybridCNNTransformer architecture
-   - Load pretrained ResNet18 backbone
-   - Initialize attention layers
-
-3. **Training**
-   - Train model on balanced dataset
-   - Monitor training/validation loss and accuracy
-   - Early stopping and model checkpointing
-
-4. **Evaluation**
-   - Compute classification metrics (accuracy, precision, recall, F1)
-   - Generate confusion matrix
-   - Plot ROC curves for each class
-
-5. **Interpretability Analysis**
-   - Generate Score-CAM attention maps
-   - Visualize model focus regions for each sample
-   - Save attention visualizations for benign, malignant, and normal samples
-
-## Key Features
-
-### 1. Three-Class Classification
-- Distinguishes between Benign, Malignant, and Normal findings
-- Critical for clinical decision support
-
-### 2. Attention Mechanism
-- Spatial attention identifies important image regions
-- Channel attention learns feature importance
-- Improves model transparency
-
-### 3. Interpretability with Score-CAM
-- Visualizes which regions influence model decisions
-- Generates attention maps showing model focus areas
-- Helps clinicians understand predictions
-- Sample outputs saved for benign, malignant, and normal classes
-
-### 4. Comprehensive Evaluation
-- Per-class metrics with classification report
-- Confusion matrix for error analysis
-- ROC-AUC curves for multi-class evaluation
-- Training curves showing convergence
-
-
-## Output Files Generated
-
-### Plots (`results/` folder)
-- **acc_&_loss_vs_epoch.png** - Training and validation curves
-- **confusion_matrix.png** - Classification confusion matrix
-- **ROC_curve.png** - Multi-class ROC analysis
-
-Each image shows:
-- Original ultrasound image
-- Model prediction with confidence
-- Score-CAM attention map (highlighted regions)
-- True label
 
 ## Model Interpretability
 
@@ -180,21 +181,10 @@ This helps clinicians:
 | Malignant | 1 | Cancerous tumors, suspicious lesions |
 | Normal | 2 | Normal breast tissue, no abnormalities |
 
-## Data Augmentation
+## Dataset 
 
-Applied during training:
-- Random rotations (±15°)
-- Horizontal/vertical flips
-- Random brightness adjustment
-- Random contrast adjustment
-- Small random crops
+BUSI Dataset
 
-Helps model generalize to variations in ultrasound acquisition.
+## License
 
-
-## References
-
-- ResNet: He, K., et al. (2016). "Deep Residual Learning for Image Recognition"
-- Attention Mechanisms: Woo, S., et al. (2018). "CBAM: Convolutional Block Attention Module"
-- Score-CAM: Wang, H., et al. (2020). "Score-CAM: Score-weighted visual explanations for convolutional neural networks"
-- BUSI Dataset: Al-Dhabyani, W., et al. (2020). "Dataset of Breast Ultrasound Images"
+This project is provided for educational and research purposes. Please include appropriate citations when using this work.
