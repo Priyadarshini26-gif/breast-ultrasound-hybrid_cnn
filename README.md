@@ -31,34 +31,6 @@ Output (Benign/Malignant/Normal)
 - **Attention:** Spatial & Channel attention layers
 - **Interpretability:** Score-CAM visualization of model decisions
 
-## Performance Highlights
-
-**State-of-the-art Results on BUSI Dataset**
-
-- **Overall Accuracy: 96%** - Excellent classification across all three classes
-- **Malignant Precision: 100%** - Perfect: no false positives for cancer diagnosis
-- **Normal Recall: 100%** - Perfectly identifies all normal cases
-- **Macro Average: 96%** - Balanced, reliable performance across classes
-- **Validation Samples: 263** - Robust evaluation on diverse ultrasound images
-
-### Clinical Significance
-
-This performance is clinically relevant because:
-
-1. **Zero False Positives for Malignant (100% Precision)**: Critical feature - avoids unnecessary procedures
-2. **94% Malignant Recall**: Catches majority of cancerous lesions
-3. **100% Normal Recall**: All normal cases identified, avoiding missed diagnoses
-4. **High Precision Across Classes**: Reduces clinical uncertainty
-5. **Consistent Performance**: Not overfitting to any single class
-
-### Validation Dataset Composition
-
-- Benign samples: 87 (33%)
-- Malignant samples: 88 (33%)
-- Normal samples: 88 (33%)
-- Total: 263 samples with balanced class distribution
-
-
 ## Performance Metrics
 
 ### Validation Results (263 samples)
@@ -102,7 +74,6 @@ Overall Accuracy: 96%
 - **Confusion Matrix** - Visualization of classification results (`results/confusion_matrix.png`)
 - **ROC-AUC Curves** - Multi-class ROC analysis for benign, malignant, and normal (`results/ROC_curve.png`)
 - **Training Curves** - Loss and accuracy over epochs (`results/acc_&_loss_vs_epoch.png`)
-- **Sample Predictions** - Attention visualizations for each class (`results/sample_predictions/`)
 
 *See `results/` folder for all generated plots and visualizations*
 
@@ -127,8 +98,6 @@ jupyter notebook breast_ultrasound_analysis.ipynb
 ```
 
 ### 2. Workflow
-
-The notebook includes the following sections:
 
 1. **Data Loading & Preprocessing**
    - Load BUSI dataset
@@ -155,28 +124,6 @@ The notebook includes the following sections:
    - Visualize model focus regions for each sample
    - Save attention visualizations for benign, malignant, and normal samples
 
-### 3. Make Predictions
-
-```python
-# Load trained model
-model = HybridCNNTransformer(num_classes=3)
-model.load_state_dict(torch.load('path_to_model.pth'))
-model.eval()
-
-# Prepare image
-image = Image.open('ultrasound.jpg')
-image_tensor = val_transform(image).unsqueeze(0)
-
-# Predict
-with torch.no_grad():
-    output = model(image_tensor)
-    probabilities = torch.softmax(output, dim=1)
-    prediction = torch.argmax(probabilities, dim=1)
-
-# Visualize attention map
-attention_map = score_cam(image_tensor, model, target_class=prediction.item())
-```
-
 ## Key Features
 
 ### 1. Three-Class Classification
@@ -200,18 +147,6 @@ attention_map = score_cam(image_tensor, model, target_class=prediction.item())
 - ROC-AUC curves for multi-class evaluation
 - Training curves showing convergence
 
-## Training Configuration
-
-```
-Device: GPU (CUDA recommended)
-Optimizer: Adam
-Loss Function: CrossEntropyLoss
-Batch Size: 32 (or adjust based on GPU memory)
-Epochs: 50+ (with early stopping)
-Learning Rate: 0.001 (with scheduler)
-Validation Split: 20%
-Random Seed: 42 (for reproducibility)
-```
 
 ## Output Files Generated
 
@@ -219,11 +154,6 @@ Random Seed: 42 (for reproducibility)
 - **acc_&_loss_vs_epoch.png** - Training and validation curves
 - **confusion_matrix.png** - Classification confusion matrix
 - **ROC_curve.png** - Multi-class ROC analysis
-
-### Sample Predictions (`results/sample_predictions/`)
-- **benign.png** - Example benign case with attention map
-- **malignant.png** - Example malignant case with attention map
-- **normal.png** - Example normal case with attention map
 
 Each image shows:
 - Original ultrasound image
@@ -234,18 +164,7 @@ Each image shows:
 ## Model Interpretability
 
 ### Score-CAM Visualization
-The model includes Score-CAM (Score-weighted Class Activation Mapping) to visualize which regions the model uses for classification:
-
-```python
-def score_cam(input_tensor, feature_maps, target_class):
-    """
-    Generates attention maps showing model focus areas
-    """
-    # Compute importance weights for each activation map
-    # Apply weights to feature maps
-    # Upsample to original image size
-    return attention_map
-```
+The model includes Score-CAM (Score-weighted Class Activation Mapping) to visualize which regions the model uses for classification.
 
 This helps clinicians:
 - Understand model decisions
